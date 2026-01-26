@@ -10,132 +10,152 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses }) => {
   const [analytics, setAnalytics] = useState<AnalyticsEvent[]>([]);
   const [profiles, setProfiles] = useState<StudentProfile[]>([]);
 
-  useEffect(() => {
-    const loadData = () => {
-      const data = JSON.parse(localStorage.getItem('educapro_analytics') || '[]');
-      const profs = JSON.parse(localStorage.getItem('educapro_profiles') || '[]');
-      setAnalytics(data);
-      setProfiles(profs);
-    };
+  const loadData = () => {
+    const data = JSON.parse(localStorage.getItem('educapro_analytics') || '[]');
+    const profs = JSON.parse(localStorage.getItem('educapro_profiles') || '[]');
+    setAnalytics(data);
+    setProfiles(profs);
+  };
 
+  useEffect(() => {
     loadData();
     window.addEventListener('storage', loadData);
     return () => window.removeEventListener('storage', loadData);
   }, []);
 
+  const clearData = () => {
+    if (confirm("¿Estás seguro de borrar todos los registros? Esta acción no se puede deshacer.")) {
+      localStorage.removeItem('educapro_analytics');
+      localStorage.removeItem('educapro_profiles');
+      loadData();
+    }
+  };
+
   const exportData = () => {
     if (analytics.length === 0 && profiles.length === 0) {
-      alert("No hay datos para exportar.");
+      alert("No hay datos disponibles para exportar.");
       return;
     }
 
-    const headers = ['Fecha', 'Estudiante', 'Carrera', 'Edad', 'Curso', 'Módulo', 'Acción', 'Contenido/Respuesta'];
+    const headers = ['Fecha y Hora', 'Estudiante', 'Carrera', 'Edad', 'Curso', 'Módulo', 'Acción', 'Valor Registrado'];
     const rows = analytics.map(ev => {
       const studentProf = profiles.find(p => p.userId === ev.userId);
       return [
-        new Date(ev.timestamp).toLocaleString(),
+        new Date(ev.timestamp).toLocaleString('es-ES'),
         ev.userName,
-        studentProf?.career || 'N/A',
-        studentProf?.age || 'N/A',
+        studentProf?.career || 'Sin Carrera',
+        studentProf?.age || '-',
         ev.courseTitle,
         ev.moduleTitle,
-        ev.action,
-        ev.value ? (typeof ev.value === 'object' ? JSON.stringify(ev.value).replace(/,/g, ';') : ev.value.toString().replace(/,/g, ';')) : 'N/A'
+        ev.action.toUpperCase(),
+        ev.value ? (typeof ev.value === 'object' ? JSON.stringify(ev.value).replace(/"/g, "'") : ev.value.toString().replace(/,/g, ';')) : '-'
       ];
     });
 
+    // Agregar BOM \uFEFF para que Excel reconozca UTF-8 (tildes)
     const csvContent = "\uFEFF" + [headers, ...rows].map(e => e.join(",")).join("\n");
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `reporte_completo_educapro_${new Date().toISOString().slice(0,10)}.csv`);
+    link.setAttribute("download", `EducaPro_Reporte_${new Date().toISOString().slice(0,10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <div className="space-y-12">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+    <div className="space-y-12 animate-fade-in">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div>
-          <h1 className="google-font text-4xl font-black text-gray-900">Consola del Profesor</h1>
-          <p className="text-gray-500 text-lg">Monitoreo de impacto educativo y analíticas sociodemográficas.</p>
+          <h1 className="google-font text-5xl font-black text-gray-900 tracking-tight">Consola Docente</h1>
+          <p className="text-gray-500 text-lg font-medium mt-2">Observatorio de datos y seguimiento de trayectorias académicas.</p>
         </div>
-        <div className="flex gap-3 w-full lg:w-auto">
+        <div className="flex gap-4 w-full lg:w-auto">
           <button 
-            onClick={() => { if(confirm("¿Borrar todos los datos capturados?")) { localStorage.clear(); window.location.reload(); }}} 
-            className="flex-1 lg:flex-none border-2 border-red-100 text-red-500 px-6 py-3 rounded-2xl font-bold hover:bg-red-50 transition"
+            onClick={clearData} 
+            className="flex-1 lg:flex-none border-2 border-red-100 text-red-500 px-8 py-4 rounded-[22px] font-black hover:bg-red-50 transition-colors"
           >
             Resetear Datos
           </button>
           <button 
             onClick={exportData} 
-            className="flex-1 lg:flex-none bg-green-600 text-white px-8 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-xl shadow-green-100 hover:bg-green-700 transition"
+            className="flex-1 lg:flex-none bg-blue-600 text-white px-10 py-4 rounded-[22px] font-black flex items-center justify-center gap-3 shadow-2xl shadow-blue-100 hover:bg-blue-700 transition-all hover:scale-[1.02]"
           >
-            <i className="fas fa-download"></i> Exportar CSV Completo
+            <i className="fas fa-file-excel"></i> Exportar Datos (CSV)
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <StatCard title="Estudiantes" value={profiles.length} icon="fa-user-graduate" color="bg-blue-600" />
-        <StatCard title="Interacciones" value={analytics.length} icon="fa-chart-pie" color="bg-indigo-600" />
-        <StatCard title="Textos Manuales" value={analytics.filter(a => a.action === 'registration' || a.action === 'feedback').length} icon="fa-keyboard" color="bg-amber-500" />
-        <StatCard title="Módulos Completos" value={analytics.filter(a => a.action === 'complete').length} icon="fa-check-double" color="bg-emerald-500" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <StatItem title="Matriculados" value={profiles.length} sub="Estudiantes únicos" icon="fa-user-graduate" color="bg-blue-600" />
+        <StatItem title="Interacciones" value={analytics.length} sub="Logs de actividad" icon="fa-fingerprint" color="bg-indigo-600" />
+        <StatItem title="Completitud" value={analytics.filter(a => a.action === 'complete').length} sub="Módulos finalizados" icon="fa-circle-check" color="bg-emerald-500" />
+        <StatItem title="Feedbacks" value={analytics.filter(a => a.action === 'registration' || a.action === 'feedback').length} sub="Respuestas manuales" icon="fa-comment-dots" color="bg-amber-500" />
       </div>
 
-      <div className="space-y-8">
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="px-8 py-6 border-b border-gray-50 bg-gray-50/50">
-            <h3 className="font-bold text-gray-900 text-xl">Perfiles Sociodemográficos Capturados</h3>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+        <div className="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+          <div className="px-10 py-8 border-b border-gray-50 bg-gray-50/30">
+            <h3 className="font-black text-gray-900 text-2xl">Perfiles de Ingreso</h3>
           </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto flex-1">
             <table className="w-full text-left">
-              <thead className="bg-gray-50 text-gray-400 text-[10px] uppercase font-black tracking-widest">
-                <tr>
-                  <th className="px-8 py-4">Nombre Estudiante</th>
-                  <th className="px-8 py-4">Carrera / Facultad</th>
-                  <th className="px-8 py-4">Edad</th>
-                  <th className="px-8 py-4">Fecha Ingreso</th>
+              <thead>
+                <tr className="bg-gray-50/50 text-gray-400 text-[10px] uppercase font-black tracking-[0.2em]">
+                  <th className="px-10 py-5">Nombre / Usuario</th>
+                  <th className="px-10 py-5">Carrera</th>
+                  <th className="px-10 py-5 text-center">Edad</th>
+                  <th className="px-10 py-5">Alta</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
                 {profiles.map((p, i) => (
-                  <tr key={i} className="hover:bg-blue-50/50 transition">
-                    <td className="px-8 py-5 font-bold text-gray-900">{p.name}</td>
-                    <td className="px-8 py-5 text-gray-600">{p.career}</td>
-                    <td className="px-8 py-5 font-bold text-blue-600">{p.age} años</td>
-                    <td className="px-8 py-5 text-gray-400 text-xs">{new Date(p.registrationDate).toLocaleDateString()}</td>
+                  <tr key={i} className="hover:bg-blue-50/30 transition-colors group">
+                    <td className="px-10 py-6">
+                       <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">{p.name.substring(0,2)}</div>
+                          <span className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{p.name}</span>
+                       </div>
+                    </td>
+                    <td className="px-10 py-6 text-gray-500 font-medium">{p.career}</td>
+                    <td className="px-10 py-6 text-center font-black text-blue-600">{p.age}</td>
+                    <td className="px-10 py-6 text-gray-400 text-xs font-bold uppercase">{new Date(p.registrationDate).toLocaleDateString()}</td>
                   </tr>
                 ))}
+                {profiles.length === 0 && (
+                  <tr><td colSpan={4} className="p-20 text-center text-gray-400 font-bold italic">No hay estudiantes registrados.</td></tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="px-8 py-6 border-b border-gray-50 bg-gray-50/50">
-            <h3 className="font-bold text-gray-900 text-xl">Respuestas de Texto (Texto Manual)</h3>
+        <div className="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+          <div className="px-10 py-8 border-b border-gray-50 bg-gray-50/30">
+            <h3 className="font-black text-gray-900 text-2xl">Bitácora de Expectativas</h3>
           </div>
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-gray-50 overflow-y-auto max-h-[600px]">
             {analytics.filter(a => a.action === 'registration' || a.action === 'feedback').reverse().map((ev, i) => (
-              <div key={i} className="p-8 hover:bg-gray-50 transition flex gap-6">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
-                  <i className="fas fa-comment-alt"></i>
+              <div key={i} className="p-10 hover:bg-gray-50/50 transition-colors flex gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 text-xl shadow-sm border border-amber-100/50">
+                  <i className="fas fa-quote-left"></i>
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="font-black text-gray-900">{ev.userName}</span>
-                    <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded font-bold uppercase tracking-tighter">FEEDBACK</span>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="font-black text-gray-900 text-lg leading-none">{ev.userName}</span>
+                    <span className="text-[10px] bg-slate-900 text-white px-3 py-1 rounded-full font-black uppercase tracking-tighter">REGISTRO</span>
                   </div>
-                  <p className="text-sm text-gray-400 mb-3">En el módulo: <span className="text-gray-600 font-bold">{ev.moduleTitle}</span></p>
-                  <div className="bg-white border border-gray-100 p-4 rounded-2xl text-gray-700 text-sm italic shadow-sm leading-relaxed">
+                  <p className="text-xs text-gray-400 font-bold uppercase mb-4 tracking-widest">Procedencia: <span className="text-blue-600">{profiles.find(p => p.userId === ev.userId)?.career || 'N/A'}</span></p>
+                  <div className="bg-white border border-gray-100 p-6 rounded-[24px] text-gray-600 text-sm italic shadow-sm leading-relaxed border-l-4 border-l-blue-500">
                     "{ev.value}"
                   </div>
                 </div>
               </div>
             ))}
+            {analytics.filter(a => a.action === 'registration').length === 0 && (
+               <div className="p-20 text-center text-gray-400 font-bold italic">No hay respuestas manuales para mostrar.</div>
+            )}
           </div>
         </div>
       </div>
@@ -143,14 +163,18 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses }) => {
   );
 };
 
-const StatCard = ({ title, value, icon, color }: any) => (
-  <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-5">
-    <div className={`w-14 h-14 ${color} text-white rounded-2xl flex items-center justify-center text-xl shadow-lg shadow-gray-100`}>
-      <i className={`fas ${icon}`}></i>
+const StatItem = ({ title, value, sub, icon, color }: any) => (
+  <div className="bg-white p-8 rounded-[35px] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+    <div className="flex justify-between items-start mb-6">
+      <div className={`w-16 h-16 ${color} text-white rounded-[20px] flex items-center justify-center text-2xl shadow-2xl shadow-gray-200 group-hover:scale-110 transition-transform`}>
+        <i className={`fas ${icon}`}></i>
+      </div>
+      <span className="text-gray-300 text-3xl font-black">#</span>
     </div>
     <div>
-      <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{title}</p>
-      <p className="text-2xl font-black text-gray-900">{value}</p>
+      <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{title}</p>
+      <p className="text-4xl font-black text-gray-900">{value}</p>
+      <p className="text-xs text-gray-400 mt-2 font-medium">{sub}</p>
     </div>
   </div>
 );
