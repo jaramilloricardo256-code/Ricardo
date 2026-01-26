@@ -1,0 +1,8 @@
+{
+  "name": "EducaPro - Plataforma Educativa Superior",
+  "description": "Una plataforma educativa modular y escalable para educación superior con integración de IA, gestión de cursos y herramientas para docentes y estudiantes.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
