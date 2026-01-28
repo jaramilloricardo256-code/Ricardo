@@ -6,6 +6,7 @@ export interface StudentProfile {
   name: string;
   age: string;
   career: string;
+  institution?: string;
   registrationDate: number;
 }
 
@@ -27,12 +28,13 @@ export interface QuizQuestion {
 export interface Module {
   id: string;
   title: string;
-  type: 'text' | 'video' | 'quiz' | 'assignment' | 'document';
+  type: 'text' | 'video' | 'quiz' | 'assignment' | 'document' | 'interactive';
   content?: string;
   videoUrl?: string;
   fileUrl?: string;
   questions?: QuizQuestion[];
   completed?: boolean;
+  interactiveData?: { title: string; body: string }[];
 }
 
 export interface Unit {
@@ -59,7 +61,10 @@ export interface AnalyticsEvent {
   courseTitle: string;
   moduleId: string;
   moduleTitle: string;
-  action: 'view' | 'complete' | 'quiz_score' | 'feedback' | 'registration';
-  value?: any; // Aquí guardaremos el texto manual o el score
+  action: 'view' | 'complete' | 'quiz_score' | 'feedback' | 'registration' | 'case_analysis' | 'interactive_click';
+  value?: any;
   timestamp: number;
+  career?: string;
+  age?: string;
+  institution?: string;
 }

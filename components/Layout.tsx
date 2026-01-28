@@ -13,7 +13,6 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children, role, setRole, activeTab, setActiveTab }) => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -25,22 +24,19 @@ const Layout: React.FC<LayoutProps> = ({ children, role, setRole, activeTab, set
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="flex bg-gray-100 p-1 rounded-full">
+              <div className="flex bg-gray-100 p-1 rounded-full border border-gray-200">
                 <button
                   onClick={() => setRole('student')}
-                  className={`px-4 py-1 rounded-full text-sm font-medium transition ${role === 'student' ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`px-4 py-1 rounded-full text-xs font-black transition ${role === 'student' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-400'}`}
                 >
-                  Estudiante
+                  ESTUDIANTE
                 </button>
                 <button
                   onClick={() => setRole('teacher')}
-                  className={`px-4 py-1 rounded-full text-sm font-medium transition ${role === 'teacher' ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`px-4 py-1 rounded-full text-xs font-black transition ${role === 'teacher' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-400'}`}
                 >
-                  Profesor
+                  PROFESOR
                 </button>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 border border-blue-200 cursor-pointer">
-                <i className="fas fa-user text-sm"></i>
               </div>
             </div>
           </div>
@@ -48,7 +44,6 @@ const Layout: React.FC<LayoutProps> = ({ children, role, setRole, activeTab, set
       </header>
 
       <div className="flex-1 flex max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-6 gap-6">
-        {/* Sidebar */}
         <aside className="hidden md:block w-64 flex-shrink-0">
           <nav className="space-y-1">
             <NavItem 
@@ -58,8 +53,8 @@ const Layout: React.FC<LayoutProps> = ({ children, role, setRole, activeTab, set
               onClick={() => setActiveTab('home')} 
             />
             <NavItem 
-              icon="fa-book" 
-              label="Cursos" 
+              icon="fa-book-open" 
+              label="Asignaturas" 
               active={activeTab === 'courses'} 
               onClick={() => setActiveTab('courses')} 
             />
@@ -72,32 +67,17 @@ const Layout: React.FC<LayoutProps> = ({ children, role, setRole, activeTab, set
               />
             )}
             {role === 'teacher' && (
-              <>
-                <NavItem 
-                  icon="fa-chalkboard-user" 
-                  label="Panel de Instructor" 
-                  active={activeTab === 'instructor'} 
-                  onClick={() => setActiveTab('instructor')} 
-                />
-                <NavItem 
-                  icon="fa-table" 
-                  label="Datos de Estudiantes" 
-                  active={activeTab === 'data'} 
-                  onClick={() => setActiveTab('data')} 
-                />
-              </>
+              <NavItem 
+                icon="fa-chalkboard-user" 
+                label="Gestión Docente" 
+                active={activeTab === 'instructor'} 
+                onClick={() => setActiveTab('instructor')} 
+              />
             )}
-            <NavItem 
-              icon="fa-gear" 
-              label="Ajustes" 
-              active={activeTab === 'settings'} 
-              onClick={() => setActiveTab('settings')} 
-            />
           </nav>
         </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 min-w-0 bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8 overflow-y-auto">
+        <main className="flex-1 min-w-0 bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
           {children}
         </main>
       </div>
@@ -115,10 +95,10 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ icon, label, active, onClick }) => (
   <button
     onClick={onClick}
-    className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition ${
+    className={`w-full flex items-center gap-3 px-4 py-4 text-sm font-bold rounded-2xl transition ${
       active 
         ? 'bg-blue-50 text-blue-600' 
-        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+        : 'text-gray-500 hover:bg-gray-50'
     }`}
   >
     <i className={`fas ${icon} w-5`}></i>
