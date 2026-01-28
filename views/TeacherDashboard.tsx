@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Course, AnalyticsEvent, Module, Unit } from '../types';
 import { exportToStandaloneHTML } from '../services/exportService';
 
@@ -14,6 +14,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
   const [analytics, setAnalytics] = useState<any[]>([]);
   const [isImporting, setIsImporting] = useState(false);
   const [selectedCourseIds, setSelectedCourseIds] = useState<Set<string>>(new Set());
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [newResource, setNewResource] = useState({
     courseId: courses[0]?.id || '',
@@ -58,6 +59,19 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
       : courses;
     
     exportToStandaloneHTML(coursesToExport, appUrl || "");
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64 = event.target?.result as string;
+      setNewResource(prev => ({ ...prev, url: base64 }));
+      alert(`Archivo "${file.name}" cargado exitosamente al sistema.`);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleAddResource = (e: React.FormEvent) => {
@@ -182,9 +196,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
         </div>
       </header>
 
-      {/* SECCIÓN HORIZONTAL DE FORMULARIOS */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        {/* PANEL IZQUIERDO: INYECCIÓN */}
         <div className="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm space-y-8">
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 bg-slate-900 rounded-[20px] flex items-center justify-center text-white text-2xl shadow-lg">
@@ -230,7 +242,18 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
                   <button type="button" onClick={() => setNewResource({...newResource, type: 'video'})} className={`p-4 rounded-2xl text-[9px] font-black uppercase tracking-widest border-2 transition ${newResource.type === 'video' ? 'bg-blue-600 text-white border-blue-600 shadow-xl' : 'bg-white text-slate-400 border-slate-100'}`}>Video</button>
                 </div>
               </div>
-              <input required placeholder="Enlace (YouTube o PDF)" value={newResource.url} onChange={e => setNewResource({...newResource, url: e.target.value})} className="w-full p-4 bg-slate-50 rounded-2xl text-xs font-bold border-none" />
+              <div className="space-y-2 relative">
+                <label className="text-[10px] font-black text-slate-400 uppercase ml-1">{newResource.type === 'document' ? 'Enlace o Archivo PDF' : 'Enlace YouTube'}</label>
+                <div className="relative group">
+                  <input required placeholder={newResource.type === 'document' ? "Enlace PDF o Cargue Local..." : "Enlace de YouTube..."} value={newResource.url} onChange={e => setNewResource({...newResource, url: e.target.value})} className="w-full p-4 pr-12 bg-slate-50 rounded-2xl text-xs font-bold border-none" />
+                  {newResource.type === 'document' && (
+                    <button type="button" onClick={() => fileInputRef.current?.click()} className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-slate-900 text-white rounded-xl flex items-center justify-center hover:bg-blue-600 transition shadow-sm" title="Subir PDF Local">
+                      <i className="fas fa-file-upload text-[10px]"></i>
+                    </button>
+                  )}
+                  <input type="file" ref={fileInputRef} accept="application/pdf" onChange={handleFileUpload} className="hidden" />
+                </div>
+              </div>
             </div>
 
             <textarea placeholder="Descripción académica..." value={newResource.description} onChange={e => setNewResource({...newResource, description: e.target.value})} className="w-full p-4 bg-slate-50 rounded-2xl text-xs font-bold border-none h-24" />
@@ -239,7 +262,6 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
           </form>
         </div>
 
-        {/* PANEL DERECHO: GENERADOR POCKET */}
         <div className="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm flex flex-col">
           <div className="flex items-center gap-5 mb-10">
             <div className="w-14 h-14 bg-blue-600 rounded-[20px] flex items-center justify-center text-white text-2xl shadow-lg shadow-blue-100">
@@ -271,14 +293,12 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
         </div>
       </div>
 
-      {/* SECCIÓN DE ESTADÍSTICAS Y ANALÍTICA */}
       <div className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <StatCard icon="fa-user-graduate" label="Estudiantes con Evidencias" value={new Set(analytics.map(a => a.userName)).size} color="blue" />
           <StatCard icon="fa-clipboard-list" label="Actividades Reportadas" value={analytics.length} color="emerald" />
         </div>
 
-        {/* TABLA DE SEGUIMIENTO ACADÉMICO */}
         <div className="bg-white rounded-[60px] border border-slate-100 overflow-hidden shadow-sm">
           <div className="p-10 bg-slate-50/40 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8">
             <div>

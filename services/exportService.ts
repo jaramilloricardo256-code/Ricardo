@@ -72,8 +72,9 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                                 m.questions.forEach(q => {
                                     const ansIdx = answers[q.id];
                                     if (ansIdx !== undefined) {
-                                        const detail = \`P: \${q.question} | R: \${q.options[ansIdx]} | \${ansIdx === q.correctAnswer ? 'OK' : 'FAIL'}\`;
-                                        csv += \`"\${s.name}","\${s.age}","\${s.career}","\${s.institution}","\${c.title}","\${m.title}","TEST_ITEM","\${detail.replace(/"/g, '""')}"\\n\`;
+                                        const resultLabel = ansIdx === q.correctAnswer ? 'CORRECTO' : 'INCORRECTO';
+                                        const detail = \`Pregunta: \${q.question.replace(/,/g, '')} | R: \${q.options[ansIdx].replace(/,/g, '')} | Resultado: \${resultLabel}\`;
+                                        csv += \`"\${s.name}","\${s.age}","\${s.career}","\${s.institution}","\${c.title}","\${m.title}","EVALUACION","\${detail.replace(/"/g, '""')}"\\n\`;
                                     }
                                 });
                             }
