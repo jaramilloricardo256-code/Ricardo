@@ -24,7 +24,7 @@ export const INITIAL_COURSES: Course[] = [
           },
           {
             id: 'm_sc_interactive',
-            title: '🔘 Explorador de Pilares SCM 4.0',
+            title: '🔘 Pilares del SCM Moderno',
             type: 'interactive',
             interactiveData: [
               { title: 'Gestión de Flujos de Información', body: 'La base de una cadena eficiente no es el movimiento de cajas, sino la fluidez de los datos. El intercambio electrónico de datos (EDI) permite reducir el tiempo de respuesta ante cambios bruscos.' },
@@ -34,6 +34,37 @@ export const INITIAL_COURSES: Course[] = [
               { title: 'Agilidad y Resiliencia', body: 'La cadena debe ser antifrágil. Esto se logra mediante el diseño de redes flexibles que puedan cambiar de ruta ante crisis internacionales.' }
             ]
           },
+          {
+            id: 'm_sc_master_simulation',
+            title: '🕹️ SIMULADOR: Crisis en LuminoTech Global',
+            type: 'interactive',
+            interactiveData: [
+              { 
+                title: '📌 ESCENARIO CRÍTICO: El Colapso LED', 
+                body: 'LuminoTech enfrenta un desplome del 13% en satisfacción por retrasos sistemáticos. Como Gerente de Operaciones, debes intervenir en cada eslabón. Tu objetivo: Restaurar el flujo y la confianza del cliente.' 
+              },
+              { 
+                title: '🚢 MUELLE: El Dilema del Abastecimiento', 
+                body: 'RETO: Los componentes importados se retrasaron y el lote recibido está incompleto.\n\nESTRATEGIA CORRECTA: Cambiar de inmediato a un proveedor nacional. Aunque el costo unitario sea mayor, el costo de "oportunidad perdida" y parada de planta es infinitamente superior. Gestiona la devolución del material incorrecto simultáneamente.' 
+              },
+              { 
+                title: '🏭 PLANTA: Cuello de Botella en Ensamble', 
+                body: 'RETO: La máquina principal falló y el personal no da abasto para la demanda actual.\n\nESTRATEGIA CORRECTA: Ejecutar mantenimiento preventivo inmediato y contratar personal temporal. No intentes procesos manuales sin soporte tecnológico; la calidad caería y el costo de garantía destruiría el margen.' 
+              },
+              { 
+                title: '📦 CEDI: Caos en el Sistema de Control', 
+                body: 'RETO: El WMS (Warehouse Management System) presenta fallas críticas y no hay vehículos para despacho.\n\nESTRATEGIA CORRECTA: Subcontratar soporte técnico experto especializado en el software y activar una flota de transporte alquilada por días. La visibilidad del inventario es tu prioridad para evitar despachos erróneos.' 
+              },
+              { 
+                title: '🏪 RETAIL: Quiebre de Stock y Bajas', 
+                body: 'RETO: Los estantes están vacíos de la referencia líder y el encargado acaba de renunciar.\n\nESTRATEGIA CORRECTA: Sustituir la demanda con productos alternativos de iguales especificaciones para no perder la venta. Envía personal de reemplazo ya capacitado desde el centro corporativo para mantener el nivel de servicio.' 
+              },
+              { 
+                title: '🤝 POST-VENTA: El Cliente es Primero', 
+                body: 'RETO: Se detectaron lotes defectuosos y las rutas de entrega están demorando más de una semana.\n\nESTRATEGIA CORRECTA: Reponer las unidades averiadas sin costo para el cliente (Garantía Total) y re-evaluar la programación de rutas mediante un software de optimización de última milla. Contrata mensajería especializada para entregas urgentes.' 
+              }
+            ]
+          },
           { 
             id: 'm_inv_quiz', 
             title: '🧠 Evaluación: Gestión de la Cadena', 
@@ -41,33 +72,33 @@ export const INITIAL_COURSES: Course[] = [
             questions: [
               { 
                 id: 'q_sc_1', 
-                question: '¿Cuál es el beneficio principal de la Visibilidad E2E?', 
-                options: ['Reducir el stock de seguridad innecesario', 'Contratar más guardias', 'Comprar software caro'], 
-                correctAnswer: 0 
+                question: 'Ante un retraso de importación crítico, la mejor opción logística es:', 
+                options: ['Esperar a que llegue el barco', 'Cambiar a un proveedor nacional alterno', 'Cancelar todos los pedidos'], 
+                correctAnswer: 1 
               },
               { 
                 id: 'q_sc_2', 
-                question: 'La sincronización de flujos busca evitar:', 
-                options: ['Cuellos de botella y exceso de inventario', 'Que el personal llegue tarde', 'Usar camiones grandes'], 
-                correctAnswer: 0 
+                question: 'Si el software de inventarios falla, la acción inmediata debe ser:', 
+                options: ['Hacerlo todo en papel', 'Subcontratar técnicos especializados', 'Cerrar el almacén'], 
+                correctAnswer: 1 
               },
               { 
                 id: 'q_sc_3', 
-                question: '¿Qué define a una cadena de suministro "Ágil"?', 
-                options: ['Reaccionar rápido ante cambios en la demanda', 'Mover paquetes rápido', 'Tener camiones veloces'], 
-                correctAnswer: 0 
+                question: 'Para mitigar la falta de vehículos propios en una crisis, se debe:', 
+                options: ['Comprar camiones nuevos', 'Alquilar vehículos por días', 'Pedirle al cliente que recoja'], 
+                correctAnswer: 1 
               },
               { 
                 id: 'q_sc_4', 
-                question: 'En SCM, el concepto de "Silo" se refiere a:', 
-                options: ['Áreas que no comparten información', 'Almacenes de granos', 'Contenedores'], 
-                correctAnswer: 0 
+                question: 'Cuando un cliente recibe un producto defectuoso, la prioridad es:', 
+                options: ['Investigar quién tuvo la culpa', 'Reponer la unidad inmediatamente', 'Ofrecer un descuento futuro'], 
+                correctAnswer: 1 
               },
               { 
                 id: 'q_sc_5', 
-                question: 'La Logística Inversa permite principalmente:', 
-                options: ['Recuperar valor de productos devueltos', 'Manejar en reversa', 'Subir el precio final'], 
-                correctAnswer: 0 
+                question: '¿Qué mide principalmente la satisfacción del cliente en SCM?', 
+                options: ['La calidad del empaque', 'El cumplimiento de la promesa de entrega (OTIF)', 'El precio del flete'], 
+                correctAnswer: 1 
               }
             ] 
           }

@@ -204,24 +204,37 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
             {activeModule.type === 'text' && <p className="text-gray-600 text-2xl font-medium leading-relaxed">{activeModule.content}</p>}
             
             {activeModule.type === 'interactive' && (
-              <div className="space-y-10">
-                <p className="text-slate-500 font-bold mb-8">Selecciona un pilar para explorar el concepto:</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-12">
+                <div className="p-8 bg-slate-900 text-white rounded-[40px] shadow-2xl relative overflow-hidden group">
+                   <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 blur-3xl group-hover:bg-blue-600/40 transition duration-700"></div>
+                   <p className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-4">Misión Operativa</p>
+                   <h2 className="text-3xl font-black italic tracking-tighter mb-4 leading-none">Intervención de Red</h2>
+                   <p className="text-slate-400 font-medium text-lg leading-relaxed">Selecciona los nodos de la cadena para desplegar el diagnóstico y la táctica correctiva recomendada.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {activeModule.interactiveData?.map((item, idx) => (
-                    <div key={idx} className="space-y-2">
+                    <div key={idx} className="space-y-4">
                       <button 
                         onClick={() => {
                           setActiveCard(activeCard === idx ? null : idx);
                           logEvent('interactive_click', activeModule.id, activeModule.title, `Exploró: ${item.title}`);
                         }}
-                        className={`w-full p-6 rounded-[30px] font-black text-lg transition-all flex justify-between items-center ${activeCard === idx ? 'bg-blue-600 text-white shadow-xl' : 'bg-slate-50 text-slate-800 hover:bg-slate-100'}`}
+                        className={`w-full p-8 rounded-[40px] font-black text-xl transition-all flex flex-col items-start gap-4 border-2 ${
+                          activeCard === idx ? 'bg-blue-600 text-white border-blue-600 shadow-2xl scale-[1.02]' : 'bg-white text-slate-800 border-slate-50 hover:border-blue-100 hover:bg-slate-50/50'
+                        }`}
                       >
-                        {item.title}
-                        <i className={`fas ${activeCard === idx ? 'fa-minus' : 'fa-plus'} text-xs`}></i>
+                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-sm ${activeCard === idx ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-600'}`}>
+                           <i className={`fas ${activeCard === idx ? 'fa-minus' : 'fa-plus'}`}></i>
+                        </div>
+                        <span className="text-left leading-tight">{item.title}</span>
                       </button>
                       {activeCard === idx && (
-                        <div className="p-8 bg-blue-50 rounded-[35px] border border-blue-100 text-slate-700 leading-relaxed font-medium animate-fade-in">
-                          {item.body}
+                        <div className="p-10 bg-slate-50 rounded-[45px] border-2 border-blue-50 text-slate-700 leading-relaxed font-medium animate-fade-in text-lg italic shadow-inner">
+                           <div className="h-2 w-12 bg-blue-600 rounded-full mb-6"></div>
+                           {item.body.split('\n').map((line, i) => (
+                             <p key={i} className={i === 0 ? "mb-4" : "mt-2"}>{line}</p>
+                           ))}
                         </div>
                       )}
                     </div>
