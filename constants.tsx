@@ -19,7 +19,7 @@ export const INITIAL_COURSES: Course[] = [
             id: 'm_chase_doc', 
             title: '📖 Texto Guía: SCM y Logística Integral', 
             type: 'document', 
-            fileUrl: 'https://ucreanop.com/wp-content/uploads/2020/08/Administracion-de-Operaciones-Produccion-y-Cadena-de-Suministro-13edi-Chase.pdf',
+            fileUrl: 'https://ucreanop.com/wp-content/uploads/2020/08/Administracion- de-Operaciones-Produccion-y-Cadena-de-Suministro-13edi-Chase.pdf',
             content: 'Material fundamental sobre el diseño de la red de valor y flujos logísticos globales.'
           },
           {
@@ -248,16 +248,102 @@ export const INITIAL_COURSES: Course[] = [
   {
     id: 'prod_met',
     title: 'Métodos y Tiempos',
-    description: 'Estudio avanzado del trabajo, ingeniería de métodos y estandarización.',
+    description: 'Estudio avanzado del trabajo, ingeniería de métodos y estandarización de procesos industriales.',
     category: 'Productividad',
     instructor: 'Dr. Sergio Valdés',
     image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800',
     units: [
       {
-        id: 'u_met_1',
-        title: '🌐 TEMA: INGENIERÍA DE MÉTODOS',
+        id: 'u_met_methods',
+        title: '📐 INGENIERÍA DE MÉTODOS',
         modules: [
-          { id: 'm_met_1', title: 'Cronometraje Industrial', type: 'text', content: 'Determinación de tiempos estándar.' }
+          {
+            id: 'm_methods_intro',
+            title: '📖 Fundamentos de la Fase: SELECCIONAR',
+            type: 'text',
+            content: `La Ingeniería de Métodos es la técnica que somete cada operación de una determinada parte del trabajo a un delicado análisis, con el fin de eliminar toda operación innecesaria y encontrar el método más rápido y eficiente para realizar las operaciones restantes. 
+
+La primera fase del estudio del trabajo es SELECCIONAR el trabajo que se va a estudiar. No todos los problemas son iguales; algunos tienen un impacto financiero masivo mientras que otros son triviales. El analista debe enfocarse en los "pocos vitales". Para esto, el Diagrama de Pareto es la herramienta reina. 
+
+Basado en la regla 80/20, este análisis nos permite visualizar que, por ejemplo, el 80% de los defectos en una línea de ensamble de puertas proviene usualmente de solo el 20% de las causas posibles. Atacar ese 20% resolverá la gran mayoría del problema de calidad de la empresa.`
+          },
+          {
+            id: 'm_pareto_interactive',
+            title: '🔘 Táctica: El Diagrama de Pareto (80/20)',
+            type: 'interactive',
+            interactiveData: [
+              { 
+                title: '¿Por qué SELECCIONAR con Pareto?', 
+                body: 'Permite que administradores e ingenieros enfoquen su atención en los defectos críticos. Es mucho más sencillo reducir o eliminar defectos que ocurren con frecuencia que aquellos que se presentan en raras ocasiones. Atacar un problema legítimo garantiza el retorno de inversión del estudio de métodos.' 
+              },
+              { 
+                title: 'Paso 1: Recolección y Ordenamiento', 
+                body: 'Identificamos las categorías de fallas o problemas. En el caso de las puertas, detectamos: "Fuera de perfil", "Piezas desordenadas", "Agujeros perdidos", etc. Se deben ordenar de mayor a menor frecuencia (Cantidad).' 
+              },
+              { 
+                title: 'Paso 2: Porcentajes e Impacto Relativo', 
+                body: 'Calculamos qué porcentaje del total representa cada defecto. Por ejemplo, si tenemos 81 defectos totales y "Fuera de perfil" ocurre 30 veces, representa el 37% del problema global.' 
+              },
+              { 
+                title: 'Paso 3: El Porcentaje Acumulado', 
+                body: 'Sumamos los porcentajes sucesivamente. Esto nos genera la curva de Lorenz. Cuando el acumulado llega cerca del 80%, hemos identificado los problemas críticos que debemos SELECCIONAR para el análisis de métodos.' 
+              },
+              { 
+                title: 'Paso 4: Análisis de la Zona Vital', 
+                body: 'En el gráfico resultante, los defectos a la izquierda de la curva (Zona A) son los responsables de la mayor parte de las pérdidas. No pierdas tiempo con "Otros" defectos que sumados apenas llegan al 5%, enfócate en los que detienen la producción.' 
+              }
+            ]
+          },
+          {
+            id: 'm_pareto_simulation',
+            title: '🕹️ SIMULADOR: Análisis de Puertas Estructurales',
+            type: 'interactive',
+            interactiveData: [
+              { 
+                title: '📊 DIAGNÓSTICO: Datos Recabados', 
+                body: 'Durante una jornada laboral, control de calidad detectó:\n1. Fuera de Perfil: 30 casos (37%)\n2. Piezas Desordenadas: 21 casos (25.9%)\n3. Agujeros/Ranuras Perdidos: 6 casos (7.4%)\nTotal acumulado de los dos primeros: 62.9%.' 
+              },
+              { 
+                title: '🔍 SELECCIONAR: La Decisión del Ingeniero', 
+                body: 'Al observar que "Fuera de Perfil" y "Piezas Desordenadas" representan casi el 63% del total de fallas, el equipo de Métodos debe SELECCIONAR estos dos procesos para un estudio de tiempos y movimientos profundo. Ignorar los defectos de "Partes no lubricadas" (6.2%) por ahora es una decisión estratégica correcta.' 
+              },
+              { 
+                title: '📈 RESULTADO: Gráfica de Líneas', 
+                body: 'La gráfica muestra una pendiente pronunciada al inicio. Esto confirma que el problema está concentrado. Al intervenir el método de perfilado y el ordenamiento de piezas, la eficiencia de la planta de puertas aumentará drásticamente con un esfuerzo localizado.' 
+              }
+            ]
+          },
+          {
+            id: 'm_met_quiz',
+            title: '🧠 Evaluación: Selección y Pareto',
+            type: 'quiz',
+            questions: [
+              {
+                id: 'q_met_1',
+                question: '¿Cuál es el primer paso oficial de la Ingeniería de Métodos?',
+                options: ['Definir el salario', 'SELECCIONAR el trabajo a estudiar', 'Comprar cronómetros'],
+                correctAnswer: 1
+              },
+              {
+                id: 'q_met_2',
+                question: 'El Diagrama de Pareto se basa en el principio de:',
+                options: ['Los pocos vitales y los muchos triviales', 'Todos los problemas valen lo mismo', 'El más rápido gana'],
+                correctAnswer: 0
+              },
+              {
+                id: 'q_met_3',
+                question: 'En el caso de las puertas, ¿cuál fue el defecto con mayor frecuencia?',
+                options: ['Piezas desordenadas', 'Agujeros perdidos', 'Fuera de perfil'],
+                correctAnswer: 2
+              },
+              {
+                id: 'q_met_4',
+                question: '¿Para qué sirve el porcentaje acumulado en un Pareto?',
+                options: ['Para saber cuánto dinero ganamos', 'Para identificar cuándo llegamos al 80% del impacto total', 'Para decorar la gráfica'],
+                correctAnswer: 1
+              }
+            ]
+          }
         ]
       }
     ]
