@@ -45,7 +45,7 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
     const savedProfileStr = localStorage.getItem(`profile_${user.id}`);
     const savedProfile = savedProfileStr ? JSON.parse(savedProfileStr) : null;
     
-    const studentName = savedProfile?.name || profileForm.name || "Estudiante Pendiente";
+    const studentName = savedProfile?.name || profileForm.name || "ID Pendiente";
     const studentCareer = savedProfile?.career || profileForm.career || "N/A";
     const studentAge = savedProfile?.age || profileForm.age || "N/A";
 
@@ -122,14 +122,21 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
       <div className="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-xl flex items-center justify-center p-4">
         <div className="bg-white p-8 lg:p-12 rounded-[50px] shadow-2xl max-w-lg w-full border border-blue-50 animate-fade-in">
           <div className="w-16 h-16 bg-blue-600 text-white rounded-[22px] flex items-center justify-center mb-8 text-2xl shadow-xl shadow-blue-100">
-            <i className="fas fa-user-plus"></i>
+            <i className="fas fa-id-card"></i>
           </div>
           <h2 className="google-font text-3xl font-black text-gray-900 mb-2 tracking-tight">Registro de Alumno</h2>
-          <p className="text-gray-500 mb-8 font-medium">Esta información es necesaria para que el docente pueda evaluar tu progreso.</p>
+          <p className="text-gray-500 mb-8 font-medium">Ingrese su identificación numérica para el seguimiento docente.</p>
           <form onSubmit={handleProfileSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Nombre Completo</label>
-              <input required value={profileForm.name} onChange={e => setProfileForm({...profileForm, name: e.target.value})} className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 focus:border-blue-600 outline-none font-bold text-gray-700" placeholder="Ej: Juan Pérez" />
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Número de Identificación</label>
+              <input 
+                required 
+                type="number"
+                value={profileForm.name} 
+                onChange={e => setProfileForm({...profileForm, name: e.target.value})} 
+                className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 focus:border-blue-600 outline-none font-bold text-gray-700" 
+                placeholder="Ej: 109823456" 
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -142,7 +149,7 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
               </div>
             </div>
             <button type="submit" className="w-full bg-blue-600 text-white py-5 rounded-2xl font-black hover:bg-blue-700 transition-all shadow-xl shadow-blue-100">
-              Empezar ahora
+              Entrar al Aula
             </button>
           </form>
         </div>

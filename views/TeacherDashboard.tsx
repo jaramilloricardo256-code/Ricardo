@@ -320,7 +320,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
             <table className="w-full text-left">
               <thead className="bg-slate-50/20 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] border-b">
                 <tr>
-                  <th className="px-12 py-8">Estudiante</th>
+                  <th className="px-12 py-8">Identificación</th>
                   <th className="px-12 py-8">Asignatura</th>
                   <th className="px-12 py-8">Actividad</th>
                   <th className="px-12 py-8">Evidencia / Respuesta</th>

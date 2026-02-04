@@ -39,7 +39,7 @@ const App: React.FC = () => {
     localStorage.setItem('educapro_user_id', savedId);
     return {
       id: savedId,
-      name: localStorage.getItem('user_real_name') || 'Estudiante',
+      name: localStorage.getItem('user_real_name') || 'ID Alumno',
       email: '',
       role: 'student',
       enrolledCourses: []

@@ -63,7 +63,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
 
             const downloadReport = () => {
                 const s = user || { name: "Anonimo", age: "?", career: "?", institution: "?" };
-                let csv = "Estudiante,Edad,Carrera,Institucion,Asignatura,Actividad,Tipo,Resultado/Detalle\\n";
+                let csv = "Identificación,Edad,Carrera,Institucion,Asignatura,Actividad,Tipo,Resultado/Detalle\\n";
                 
                 COURSES.forEach(c => {
                     c.units.forEach(u => {
@@ -89,7 +89,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                 });
                 const blob = new Blob([csv], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
-                const a = document.createElement('a'); a.href = url; a.download = \`Reporte_\${s.name}.csv\`; a.click();
+                const a = document.createElement('a'); a.href = url; a.download = \`Reporte_ID_\${s.name}.csv\`; a.click();
             };
 
             if (!user) {
@@ -104,7 +104,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                                 localStorage.setItem('ep_u', JSON.stringify(u));
                                 setUser(u);
                             }} className="space-y-4">
-                                <input name="n" required placeholder="Nombre Completo" className="w-full p-5 bg-slate-50 rounded-2xl outline-none font-bold" />
+                                <input name="n" type="number" required placeholder="Número de Identificación" className="w-full p-5 bg-slate-50 rounded-2xl outline-none font-bold" />
                                 <div className="grid grid-cols-3 gap-3">
                                     <input name="a" type="number" required placeholder="Edad" className="p-5 bg-slate-50 rounded-2xl outline-none font-bold" />
                                     <input name="c" required placeholder="Carrera" className="col-span-2 p-5 bg-slate-50 rounded-2xl outline-none font-bold" />
@@ -230,7 +230,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                     <header className="glass-header sticky top-0 z-50 py-8 px-10 -mx-10 mb-16 flex flex-col md:flex-row justify-between items-center gap-8 rounded-b-[40px] shadow-sm">
                         <div className="text-center md:text-left">
                             <h1 className="text-4xl font-black text-slate-900 italic uppercase">EducaPro <span className="text-blue-600">Pocket</span></h1>
-                            <p className="text-slate-400 font-bold text-[9px] uppercase tracking-[0.4em] mt-2">{user.name} | {user.career}</p>
+                            <p className="text-slate-400 font-bold text-[9px] uppercase tracking-[0.4em] mt-2">ID: {user.name} | {user.career}</p>
                         </div>
                         <button onClick={downloadReport} className="bg-emerald-600 text-white px-8 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg hover:scale-105 transition active:scale-95">REPORTE CSV DE ACTIVIDADES</button>
                     </header>
