@@ -134,9 +134,10 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
                 institution: parts[3],
                 userId: 'POCKET-' + Math.random().toString(36).substr(2, 5),
                 courseTitle: parts[4] || 'Aula Pocket',
-                moduleTitle: parts[5],
+                unitTitle: parts[5] || 'Tema Importado',
+                moduleTitle: parts[6] || parts[5],
                 action: 'case_analysis',
-                value: parts[7] || parts[6], 
+                value: parts[8] || parts[7], 
                 timestamp: Date.now(),
                 moduleId: 'pocket-import',
                 courseId: 'pocket-import'
@@ -156,6 +157,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
               institution: stu.institution || "N/A",
               courseId: "pocket",
               courseTitle: "Aula Pocket",
+              unitTitle: "Pocket Unit",
               moduleId: mid,
               moduleTitle: "Actividad",
               action: 'complete',
@@ -321,7 +323,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
               <thead className="bg-slate-50/20 text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] border-b">
                 <tr>
                   <th className="px-12 py-8">Identificación</th>
-                  <th className="px-12 py-8">Asignatura</th>
+                  <th className="px-12 py-8">Asignatura / Unidad</th>
                   <th className="px-12 py-8">Actividad</th>
                   <th className="px-12 py-8">Evidencia / Respuesta</th>
                   <th className="px-12 py-8 text-right">Fecha</th>
@@ -334,7 +336,10 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ courses, onCourseUp
                         <p className="font-black text-slate-900 leading-none mb-1 text-sm">{a.userName}</p>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{a.career}</p>
                     </td>
-                    <td className="px-12 py-8 text-slate-500 font-black text-[11px] uppercase tracking-tight">{a.courseTitle}</td>
+                    <td className="px-12 py-8">
+                        <p className="text-slate-500 font-black text-[11px] uppercase tracking-tight">{a.courseTitle}</p>
+                        <p className="text-blue-600 font-bold text-[9px] uppercase italic">{a.unitTitle}</p>
+                    </td>
                     <td className="px-12 py-8">
                         <p className="text-[11px] font-black text-slate-700 uppercase">{a.moduleTitle}</p>
                     </td>

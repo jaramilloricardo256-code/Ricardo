@@ -75,10 +75,26 @@ const Layout: React.FC<LayoutProps> = ({ children, role, setRole, activeTab, set
               />
             )}
           </nav>
+          
+          <div className="mt-10 p-6 bg-slate-900 rounded-[30px] text-white">
+            <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2">Autoría</p>
+            <p className="text-xs font-bold leading-tight italic">Diseñado por:</p>
+            <p className="text-sm font-black text-white mt-1">Ricardo Hinestroza</p>
+            <div className="mt-4 pt-4 border-t border-white/10">
+               <p className="text-[8px] text-slate-400 uppercase">En colaboración con Gemini AI</p>
+            </div>
+          </div>
         </aside>
 
-        <main className="flex-1 min-w-0 bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
-          {children}
+        <main className="flex-1 min-w-0 bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8 flex flex-col">
+          <div className="flex-1">
+            {children}
+          </div>
+          <footer className="mt-12 pt-8 border-t border-gray-100 text-center">
+            <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">
+              Creador Ricardo Hinestroza &copy; {new Date().getFullYear()} - Plataforma EducaPro
+            </p>
+          </footer>
         </main>
       </div>
     </div>

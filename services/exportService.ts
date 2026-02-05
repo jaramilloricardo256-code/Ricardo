@@ -97,6 +97,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-6">
                         <div className="bg-white p-12 rounded-[50px] max-w-md w-full shadow-2xl">
                             <h1 className="text-3xl font-black text-slate-900 mb-8 italic uppercase text-center tracking-tighter">EducaPro <span className="text-blue-600">Pocket</span></h1>
+                            <p className="text-center text-[10px] font-black text-slate-400 uppercase mb-8">Creador: Ricardo Hinestroza</p>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 const d = new FormData(e.target);
@@ -128,7 +129,8 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                             <button onClick={() => {setActiveCourse(null); setActiveMod(null)}} className="mb-10 text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-3 hover:text-blue-600 transition">
                                 <i className="fas fa-chevron-left"></i> Catálogo
                             </button>
-                            <h2 className="text-xl font-black text-slate-900 mb-8 italic leading-tight">{activeCourse.title}</h2>
+                            <h2 className="text-xl font-black text-slate-900 mb-2 italic leading-tight">{activeCourse.title}</h2>
+                            <p className="text-[9px] font-black text-slate-400 uppercase mb-8 italic">Autor: Ricardo Hinestroza</p>
                             {activeCourse.units.map(u => (
                                 <div key={u.id} className="mb-8">
                                     <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-4 border-b pb-2">{u.title}</p>
@@ -168,7 +170,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
 
                                     {activeMod.type === 'text' && (
                                         <div className="space-y-8">
-                                            <p className="text-2xl text-slate-600 leading-relaxed font-medium">{activeMod.content}</p>
+                                            <p className="text-2xl text-slate-600 leading-relaxed font-medium whitespace-pre-line">{activeMod.content}</p>
                                             <textarea value={cases[activeMod.id] || ''} onChange={(e) => setCases({...cases, [activeMod.id]: e.target.value})} placeholder="Su análisis..." className="w-full h-48 p-6 bg-slate-50 rounded-3xl border-none font-medium" />
                                         </div>
                                     )}
@@ -219,6 +221,10 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                                 }} className="w-full bg-slate-900 text-white py-7 rounded-[35px] font-black uppercase tracking-widest shadow-2xl text-sm transition hover:bg-blue-600 active:scale-95">
                                     {isLast ? 'Finalizar Asignatura' : 'Siguiente Lección'}
                                 </button>
+                                
+                                <footer className="mt-20 py-10 text-center">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Creador Ricardo Hinestroza &copy; {new Date().getFullYear()}</p>
+                                </footer>
                             </div>
                         </main>
                     </div>
@@ -230,7 +236,7 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                     <header className="glass-header sticky top-0 z-50 py-8 px-10 -mx-10 mb-16 flex flex-col md:flex-row justify-between items-center gap-8 rounded-b-[40px] shadow-sm">
                         <div className="text-center md:text-left">
                             <h1 className="text-4xl font-black text-slate-900 italic uppercase">EducaPro <span className="text-blue-600">Pocket</span></h1>
-                            <p className="text-slate-400 font-bold text-[9px] uppercase tracking-[0.4em] mt-2">ID: {user.name} | {user.career}</p>
+                            <p className="text-slate-400 font-bold text-[9px] uppercase tracking-[0.4em] mt-2">ID: {user.name} | Creador: Ricardo Hinestroza</p>
                         </div>
                         <button onClick={downloadReport} className="bg-emerald-600 text-white px-8 py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg hover:scale-105 transition active:scale-95">REPORTE CSV DE ACTIVIDADES</button>
                     </header>
@@ -249,7 +255,8 @@ export const exportToStandaloneHTML = (courses: Course[], googleScriptUrl: strin
                                             <div className="bg-blue-600 h-full transition-all duration-1000" style={{width: perc+'%'}}></div>
                                         </div>
                                     </div>
-                                    <h3 className="text-2xl font-black text-slate-900 mb-8 leading-tight italic flex-grow">{c.title}</h3>
+                                    <h3 className="text-2xl font-black text-slate-900 mb-2 leading-tight italic flex-grow">{c.title}</h3>
+                                    <p className="text-[10px] font-black text-slate-300 uppercase mb-8">Autor: Ricardo Hinestroza</p>
                                     <button onClick={() => {setActiveCourse(c); setActiveMod(c.units[0].modules[0]); window.scrollTo(0,0)}} className="w-full bg-slate-900 text-white py-6 rounded-[30px] font-black uppercase text-xs shadow-xl hover:bg-blue-600 transition active:scale-95">Abrir Asignatura</button>
                                 </div>
                             );

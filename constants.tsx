@@ -2,346 +2,161 @@
 import { Course } from './types';
 
 export const INITIAL_COURSES: Course[] = [
-  // --- ÁREA LOGÍSTICA ---
-  {
-    id: 'log_inv',
-    title: 'Gestión de Inventario',
-    description: 'Optimización de existencias, modelos de reposición y gestión estratégica de almacenes para la eficiencia operativa.',
-    category: 'Logística',
-    instructor: 'Richard B. Chase & Equipo EducaPro',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
-    units: [
-      {
-        id: 'u_inv_1',
-        title: '🌐 TEMA: CADENA DE SUMINISTRO',
-        modules: [
-          { 
-            id: 'm_chase_doc', 
-            title: '📖 Texto Guía: SCM y Logística Integral', 
-            type: 'document', 
-            fileUrl: 'https://ucreanop.com/wp-content/uploads/2020/08/Administracion- de-Operaciones-Produccion-y-Cadena-de-Suministro-13edi-Chase.pdf',
-            content: 'Material fundamental sobre el diseño de la red de valor y flujos logísticos globales.'
-          },
-          {
-            id: 'm_sc_interactive',
-            title: '🔘 Pilares del SCM Moderno',
-            type: 'interactive',
-            interactiveData: [
-              { title: 'Gestión de Flujos de Información', body: 'La base de una cadena eficiente no es el movimiento de cajas, sino la fluidez de los datos. El intercambio electrónico de datos (EDI) permite reducir el tiempo de respuesta ante cambios bruscos.' },
-              { title: 'Logística Inversa Estratégica', body: 'Se trata de la economía circular. Diseñar procesos que permitan recuperar componentes y reacondicionar productos para minimizar el impacto ambiental.' },
-              { title: 'Visibilidad E2E (Extremo a Extremo)', body: 'Capacidad de ver el inventario no solo en mi almacén, sino en tránsito y en los almacenes de mis proveedores para optimizar el flujo de efectivo.' },
-              { title: 'Sincronización y Colaboración', body: 'Romper los silos departamentales mediante planes de demanda compartidos (S&OP) para eliminar ineficiencias por objetivos contradictorios.' },
-              { title: 'Agilidad y Resiliencia', body: 'La cadena debe ser antifrágil. Esto se logra mediante el diseño de redes flexibles que puedan cambiar de ruta ante crisis internacionales.' }
-            ]
-          },
-          {
-            id: 'm_sc_master_simulation',
-            title: '🕹️ SIMULADOR: Crisis en LuminoTech Global',
-            type: 'interactive',
-            interactiveData: [
-              { 
-                title: '📌 ESCENARIO CRÍTICO: El Colapso LED', 
-                body: 'LuminoTech enfrenta un desplome del 13% en satisfacción por retrasos sistemáticos. Como Gerente de Operaciones, debes intervenir en cada eslabón. Tu objetivo: Restaurar el flujo y la confianza del cliente.' 
-              },
-              { 
-                title: '🚢 MUELLE: El Dilema del Abastecimiento', 
-                body: 'RETO: Los componentes importados se retrasaron y el lote recibido está incompleto.\n\nESTRATEGIA CORRECTA: Cambiar de inmediato a un proveedor nacional. Aunque el costo unitario sea mayor, el costo de "oportunidad perdida" y parada de planta es infinitamente superior. Gestiona la devolución del material incorrecto simultáneamente.' 
-              },
-              { 
-                title: '🏭 PLANTA: Cuello de Botella en Ensamble', 
-                body: 'RETO: La máquina principal falló y el personal no da abasto para la demanda actual.\n\nESTRATEGIA CORRECTA: Ejecutar mantenimiento preventivo inmediato y contratar personal temporal. No intentes procesos manuales sin soporte tecnológico; la calidad caería y el costo de garantía destruiría el margen.' 
-              },
-              { 
-                title: '📦 CEDI: Caos en el Sistema de Control', 
-                body: 'RETO: El WMS (Warehouse Management System) presenta fallas críticas y no hay vehículos para despacho.\n\nESTRATEGIA CORRECTA: Subcontratar soporte técnico experto especializado en el software y activar una flota de transporte alquilada por días. La visibilidad del inventario es tu prioridad para evitar despachos erróneos.' 
-              },
-              { 
-                title: '🏪 RETAIL: Quiebre de Stock y Bajas', 
-                body: 'RETO: Los estantes están vacíos de la referencia líder y el encargado acaba de renunciar.\n\nESTRATEGIA CORRECTA: Sustituir la demanda con productos alternativos de iguales especificaciones para no perder la venta. Envía personal de reemplazo ya capacitado desde el centro corporativo para mantener el nivel de servicio.' 
-              },
-              { 
-                title: '🤝 POST-VENTA: El Cliente es Primero', 
-                body: 'RETO: Se detectaron lotes defectuosos y las rutas de entrega están demorando más de una semana.\n\nESTRATEGIA CORRECTA: Reponer las unidades averiadas sin costo para el cliente (Garantía Total) y re-evaluar la programación de rutas mediante un software de optimización de última milla. Contrata mensajería especializada para entregas urgentes.' 
-              }
-            ]
-          },
-          { 
-            id: 'm_inv_quiz', 
-            title: '🧠 Evaluación: Gestión de la Cadena', 
-            type: 'quiz', 
-            questions: [
-              { 
-                id: 'q_sc_1', 
-                question: 'Ante un retraso de importación crítico, la mejor opción logística es:', 
-                options: ['Esperar a que llegue el barco', 'Cambiar a un proveedor nacional alterno', 'Cancelar todos los pedidos'], 
-                correctAnswer: 1 
-              },
-              { 
-                id: 'q_sc_2', 
-                question: 'Si el software de inventarios falla, la acción inmediata debe ser:', 
-                options: ['Hacerlo todo en papel', 'Subcontratar técnicos especializados', 'Cerrar el almacén'], 
-                correctAnswer: 1 
-              },
-              { 
-                id: 'q_sc_3', 
-                question: 'Para mitigar la falta de vehículos propios en una crisis, se debe:', 
-                options: ['Comprar camiones nuevos', 'Alquilar vehículos por días', 'Pedirle al cliente que recoja'], 
-                correctAnswer: 1 
-              },
-              { 
-                id: 'q_sc_4', 
-                question: 'Cuando un cliente recibe un producto defectuoso, la prioridad es:', 
-                options: ['Investigar quién tuvo la culpa', 'Reponer la unidad inmediatamente', 'Ofrecer un descuento futuro'], 
-                correctAnswer: 1 
-              },
-              { 
-                id: 'q_sc_5', 
-                question: '¿Qué mide principalmente la satisfacción del cliente en SCM?', 
-                options: ['La calidad del empaque', 'El cumplimiento de la promesa de entrega (OTIF)', 'El precio del flete'], 
-                correctAnswer: 1 
-              }
-            ] 
-          }
-        ]
-      }
-    ]
-  },
+  // --- SISTEMAS DE INFORMACIÓN LOGÍSTICA ---
   {
     id: 'log_sis',
     title: 'Sistemas de Información Logística',
-    description: 'Implementación de WMS, ERP y tecnologías de trazabilidad digital para la visibilidad de la red.',
+    description: 'Implementación de WMS, ERP y analítica de datos para la visibilidad de la red.',
     category: 'Logística',
-    instructor: 'Ing. Carlos Ruiz',
+    instructor: 'Ricardo Hinestroza',
     image: 'https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=800',
     units: [
       {
-        id: 'u_sis_1',
-        title: '🌐 TEMA: TECNOLOGÍAS DE VISIBILIDAD',
+        id: 'u_sis_math_analytics',
+        title: '🔢 UNIDAD: ANALÍTICA Y ESTADÍSTICA LOGÍSTICA',
         modules: [
-          { id: 'm_sis_1', title: 'Arquitectura de un WMS', type: 'text', content: 'Un Warehouse Management System permite el control exacto de ubicaciones.' }
+          {
+            id: 'm_math_intro',
+            title: '📖 El Dato como Activo Estratégico',
+            type: 'text',
+            content: `Dominar los números es dominar la operación. Un error en un decimal puede costar millones en una importación o un quiebre de stock masivo. En esta unidad, transformaremos la matemática básica en una herramienta de poder gerencial.`
+          },
+          {
+            id: 'm_math_regla3_directa',
+            title: '🕹️ SIMULADOR: Regla de 3 Directa (Flujos)',
+            type: 'interactive',
+            interactiveData: [
+              { title: 'Concepto: Proporcionalidad Directa', body: 'A más pedidos, más tiempo. A más camiones, más capacidad. \n\nCálculo: (Nuevo Valor * Referencia B) / Referencia A.' },
+              { title: 'EJERCICIO: Rendimiento de Montacargas', body: 'Si 12 operarios de montacargas movilizan 360 estibas en una jornada, ¿cuántas estibas podrán movilizar 25 operarios manteniendo el mismo ritmo? \n\nRESOLUCIÓN: (25 * 360) / 12 = 750 estibas. Útil para dimensionar flotas de equipo.' },
+              { title: 'EJERCICIO: Abastecimiento de Flota', body: 'Una van de reparto consume 45 galones de combustible para cubrir 350km de ruta. ¿Cuántos galones se deben presupuestar para una ruta de 1.200km? \n\nRESOLUCIÓN: (1.200 * 45) / 350 = 154.28 galones.' }
+            ]
+          },
+          {
+            id: 'm_math_regla3_inversa',
+            title: '🕹️ SIMULADOR: Regla de 3 Inversa (Tiempos)',
+            type: 'interactive',
+            interactiveData: [
+              { title: 'Concepto: Relación Inversa', body: 'A más recursos, menos tiempo. Fundamental para optimización de plazos. \n\nCálculo: (Recurso Inicial * Tiempo Inicial) / Nuevo Recurso.' },
+              { title: 'EJERCICIO: Adecuación de Bodega', body: '420 obreros terminan el montaje de estanterías en 300 días. Si la dirección requiere que el CEDI esté listo en solo 210 días, ¿cuántos obreros en total se necesitan? \n\nRESOLUCIÓN: (420 * 300) / 210 = 600 obreros totales. Se requiere contratar 180 adicionales.' },
+              { title: 'EJERCICIO: Estaciones de Escaneo', body: '6 estaciones de auditoría procesan un lote de mercancía en 18 horas. Si habilitamos 9 estaciones iguales, ¿cuánto tiempo tomará el proceso? \n\nRESOLUCIÓN: (6 * 18) / 9 = 12 horas.' }
+            ]
+          },
+          {
+            id: 'm_math_iva_porcentajes',
+            title: '🔘 Estrategia: Porcentajes e IVA',
+            type: 'interactive',
+            interactiveData: [
+              { title: 'Auditoría de IVA (19%)', body: 'Se recibe una factura global de servicios de transporte por $3.500.000 con el IVA del 19% ya incluido. El analista debe reportar el costo antes de impuestos. \n\nCÁLCULO: 3.500.000 / 1.19 = $2.941.176 valor base.' },
+              { title: 'Tasa de Ausentismo Operativo', body: 'En una planta con 820 colaboradores, se registraron 94 ausencias en el último mes por motivos de salud. ¿Cuál es el porcentaje de ausentismo? \n\nCÁLCULO: (94 / 820) * 100 = 11.46%.' },
+              { title: 'Comisiones sobre Rentabilidad', body: 'Se cierra una venta corporativa de $8.000.000. El margen de utilidad operativa es del 15% ($1.200.000). Se acuerda una comisión del 8% sobre esa utilidad para el ejecutivo. \n\nCÁLCULO: 1.200.000 * 0.08 = $96.000.' }
+            ]
+          },
+          {
+            id: 'm_math_video_tutorial',
+            title: '📺 Masterclass: Analítica para no Matemáticos',
+            type: 'video',
+            videoUrl: 'https://www.youtube.com/embed/N1vXRE67f-0',
+            content: 'Guía paso a paso para resolver problemas de proporciones en el entorno industrial.'
+          },
+          {
+            id: 'm_math_quiz_final',
+            title: '🧠 Evaluación: Certificación en Analítica',
+            type: 'quiz',
+            questions: [
+              { id: 'qm_1', question: 'Si 8 empacadores tardan 60h en un despacho masivo, ¿cuántos empacadores se necesitan para hacerlo en 24h?', options: ['12 empacadores', '20 empacadores', '15 empacadores'], correctAnswer: 1 },
+              { id: 'qm_2', question: 'Un rack industrial de 15m tiene 6 niveles. Si rediseñamos para tener 8 niveles en la misma altura, ¿cuánto medirá cada nivel?', options: ['1.875m', '2.100m', '1.500m'], correctAnswer: 0 },
+              { id: 'qm_3', question: 'De 120 paquetes procesados, el 15% tiene errores de picking. De estos errores, el 40% son etiquetas mal pegadas. ¿Cuántos tienen etiquetas mal pegadas?', options: ['18 paquetes', '12 paquetes', '7 paquetes'], correctAnswer: 2 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'u_sis_scm_digital',
+        title: '🌐 UNIDAD: CADENA DE SUMINISTRO DIGITAL',
+        modules: [
+          { id: 'm_sis_sc_1', title: 'Fundamentos SCM', type: 'text', content: 'Integración tecnológica de flujos físicos e informativos.' }
         ]
       }
     ]
   },
+  // --- GESTIÓN DE INVENTARIOS ---
   {
-    id: 'log_trans',
-    title: 'Transporte y Distribución',
-    description: 'Planificación de redes de transporte, gestión de flotas y optimización de última milla bajo el marco legal vigente.',
+    id: 'log_inv',
+    title: 'Gestión de Inventario',
+    description: 'Optimización de existencias y modelos de reposición estratégica.',
     category: 'Logística',
-    instructor: 'Dra. Marta Soler',
-    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800',
+    instructor: 'Ricardo Hinestroza',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
     units: [
       {
-        id: 'u_trans_norm',
-        title: '⚖️ TEMA: NORMATIVIDAD DE CARGA EN COLOMBIA',
+        id: 'u_inv_scm',
+        title: '🌐 TEMA: CADENA DE SUMINISTRO GLOBAL',
         modules: [
-          {
-            id: 'm_trans_inter_1',
-            title: '🔘 Marco Regulatorio: Decreto 173 y Res. 4100',
-            type: 'interactive',
-            interactiveData: [
-              { title: 'Decreto 173 de 2021', body: 'Es el eje central de la regulación. Establece obligaciones para transportadores y usuarios, garantizando la seguridad en el territorio nacional para cargadores, destinatarios y operadores logísticos.' },
-              { title: 'Resolución 4100 de 2004', body: 'Define detalladamente las características técnicas: tipología de camiones, dimensiones máximas, designaciones de peso y nombres de carrocerías según la Norma NTC 4788.' },
-              { title: 'Obligaciones del Transportador', body: 'Contar con permisos vigentes, garantizar cumplimiento de normas técnicas, programas de mantenimiento preventivo y asegurar la carga con sistemas de amarre adecuados.' },
-              { title: 'Obligaciones del Usuario', body: 'Suministrar información veraz (peso, dimensiones, tipo), pagar el flete acordado y proporcionar condiciones seguras para cargue y descargue.' },
-              { title: 'Responsabilidad por Carga', body: 'El transportador responde desde la recogida hasta la entrega final. Sin embargo, en daños por mal embalaje, la responsabilidad puede recaer en el usuario.' }
-            ]
+          { 
+            id: 'm_chase_inv', 
+            title: '📖 Texto Guía: SCM Integral', 
+            type: 'document', 
+            fileUrl: 'https://ucreanop.com/wp-content/uploads/2020/08/Administracion-de-Operaciones-Produccion-y-Cadena-de-Suministro-13edi-Chase.pdf'
           },
           {
-            id: 'm_trans_inter_2',
-            title: '🔘 Clasificación Técnica de Vehículos',
+            id: 'm_inv_simulation',
+            title: '🕹️ SIMULADOR: Crisis LuminoTech',
             type: 'interactive',
             interactiveData: [
-              { title: 'Vehículos Rígidos (C)', body: 'La carrocería y el chasis están unidos. C2 (2 ejes), C3 (3 ejes/Doble-troque), C4 (4 ejes/Cuatro-manos). Se clasifican por el número de ejes.' },
-              { title: 'Tractocamiones (S)', body: 'Articulados integrados por un cabezote más un tráiler. El S1 indica semirremolque de 1 eje, S2 de dos ejes y S3 de tres ejes. Ejemplo: C3S3 (Tractomula).' },
-              { title: 'Remolques (R)', body: 'Vehículos no automotores arrastrados donde el peso no recae sobre el motor. Ejemplo: C2R2 es un camión de 2 ejes con remolque de 2 ejes.' },
-              { title: 'Pesos y Dimensiones', body: 'Ancho máximo permitido: 2,60m. Altura máxima: 4,10m. El Peso Bruto Vehicular (PBV) varía desde 16ton para un C2 hasta 52ton para un C3S3.' },
-              { title: 'Sistemas de Amarre', body: 'Uso obligatorio de cinchas, cadenas y barras de amarre adecuadas. La seguridad de la carga es vital para evitar accidentes en la vía.' }
-            ]
-          },
-          {
-            id: 'm_trans_inter_3',
-            title: '🔘 Seguros e Infraestructura',
-            type: 'interactive',
-            interactiveData: [
-              { title: 'Seguros de Transporte', body: 'Protegen al propietario y al transportista. Existen modalidades para carga terrestre, marítima y aérea. Cubren pérdida total, daños parciales, robo y salvamento.' },
-              { title: 'Puertos Marítimos', body: 'Nodos críticos de infraestructura. Puertos principales: Cartagena, Barranquilla, Santa Marta (Atlántico) y Buenaventura (Pacífico), motor del comercio exterior.' },
-              { title: 'Marco Legal Complementario', body: 'Ley 336/1996 (Estatuto Nacional de Transporte), Ley 769/2002 (Código Nacional de Tránsito) y Resolución 1361/2014 (Mercancías Peligrosas).' },
-              { title: 'Documentación Requerida', body: 'Licencia de conducción C2/C3, SOAT, Revisión Técnico-Mecánica, Guía de Remisión, Factura y Contrato de Transporte firmado.' }
-            ]
-          },
-          {
-            id: 'm_trans_quiz_norm',
-            title: '🧠 Evaluación: Normatividad y Técnica',
-            type: 'quiz',
-            questions: [
-              {
-                id: 'q_norm_1',
-                question: '¿Qué norma técnica colombiana se encarga de la tipología de vehículos?',
-                options: ['NTC 4788', 'Ley 100', 'Decreto 1079'],
-                correctAnswer: 0
-              },
-              {
-                id: 'q_norm_2',
-                question: '¿Cuál es el ancho máximo permitido para un vehículo de carga en Colombia?',
-                options: ['2.40 metros', '2.60 metros', '3.00 metros'],
-                correctAnswer: 1
-              },
-              {
-                id: 'q_norm_3',
-                question: '¿A qué hace referencia la clasificación C3S2?',
-                options: ['Camión rígido de 5 ejes', 'Tractocamión de 3 ejes con semirremolque de 2 ejes', 'Remolque de 3 ejes'],
-                correctAnswer: 1
-              },
-              {
-                id: 'q_norm_4',
-                question: 'La responsabilidad del transportador sobre la mercancía inicia en:',
-                options: ['Cuando el camión sale del garaje', 'En el momento de la recogida', 'Al llegar al peaje'],
-                correctAnswer: 1
-              },
-              {
-                id: 'q_norm_5',
-                question: '¿Cuál es el Peso Bruto Vehicular (PBV) máximo para un camión de 2 ejes (C2)?',
-                options: ['10,000 kg', '16,000 kg', '25,000 kg'],
-                correctAnswer: 1
-              }
+              { title: 'Escenario Crítico', body: 'Demanda insatisfecha del 13%. Debes decidir entre costo de transporte o pérdida de cliente.' },
+              { title: 'Decisión: Abastecimiento', body: 'Cambiar a proveedor nacional para reducir el Lead Time.' }
             ]
           }
         ]
       }
     ]
   },
+  // --- TRANSPORTE Y DISTRIBUCIÓN ---
   {
-    id: 'adm_com',
-    title: 'Gestión de Compras',
-    description: 'Abastecimiento estratégico, negociación y control del gasto corporativo.',
-    category: 'Administración',
-    instructor: 'Lic. Roberto Gómez',
-    image: 'https://images.unsplash.com/photo-1556740734-7f9a2b7a0f40?auto=format&fit=crop&q=80&w=800',
+    id: 'log_trans',
+    title: 'Transporte y Distribución',
+    description: 'Planificación de redes y gestión de flotas bajo normatividad.',
+    category: 'Logística',
+    instructor: 'Ricardo Hinestroza',
+    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800',
     units: [
       {
-        id: 'u_com_1',
-        title: '🌐 TEMA: ABASTECIMIENTO',
+        id: 'u_trans_norma',
+        title: '⚖️ UNIDAD: NORMATIVIDAD TÉCNICA',
         modules: [
-          { id: 'm_com_1', title: 'Matriz de Kraljic', type: 'text', content: 'Clasificación estratégica de materiales.' }
+          {
+            id: 'm_trans_res4100',
+            title: '🔘 Resolución 4100: Pesos y Dimensiones',
+            type: 'interactive',
+            interactiveData: [
+              { title: 'Límites de Ancho', body: 'Ancho máximo permitido: 2.60 metros.' },
+              { title: 'Tipologías', body: 'Clasificación C2, C3, S3 según configuración de ejes.' }
+            ]
+          }
         ]
       }
     ]
   },
-  {
-    id: 'adm_proc',
-    title: 'Procesos Productivos',
-    description: 'Lean Manufacturing, gestión de calidad y diseño de manufactura.',
-    category: 'Administración',
-    instructor: 'Ing. Laura Peña',
-    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800',
-    units: [
-      {
-        id: 'u_pp_1',
-        title: '🌐 TEMA: FLUJOS DE PLANTA',
-        modules: [
-          { id: 'm_pp_1', title: 'Sistemas Push vs Pull', type: 'text', content: 'Gestión de flujo según ritmo de demanda.' }
-        ]
-      }
-    ]
-  },
+  // --- MÉTODOS Y TIEMPOS ---
   {
     id: 'prod_met',
     title: 'Métodos y Tiempos',
-    description: 'Estudio avanzado del trabajo, ingeniería de métodos y estandarización de procesos industriales.',
+    description: 'Estudio avanzado del trabajo y estandarización de procesos.',
     category: 'Productividad',
-    instructor: 'Dr. Sergio Valdés',
+    instructor: 'Ricardo Hinestroza',
     image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800',
     units: [
       {
-        id: 'u_met_methods',
-        title: '📐 INGENIERÍA DE MÉTODOS',
+        id: 'u_met_ingenieria',
+        title: '📐 TEMA: INGENIERÍA DE MÉTODOS',
         modules: [
           {
-            id: 'm_methods_intro',
-            title: '📖 Fundamentos de la Fase: SELECCIONAR',
-            type: 'text',
-            content: `La Ingeniería de Métodos es la técnica que somete cada operación de una determinada parte del trabajo a un delicado análisis, con el fin de eliminar toda operación innecesaria y encontrar el método más rápido y eficiente para realizar las operaciones restantes. 
-
-La primera fase del estudio del trabajo es SELECCIONAR el trabajo que se va a estudiar. No todos los problemas son iguales; algunos tienen un impacto financiero masivo mientras que otros son triviales. El analista debe enfocarse en los "pocos vitales". Para esto, el Diagrama de Pareto es la herramienta reina. 
-
-Basado en la regla 80/20, este análisis nos permite visualizar que, por ejemplo, el 80% de los defectos en una línea de ensamble de puertas proviene usualmente de solo el 20% de las causas posibles. Atacar ese 20% resolverá la gran mayoría del problema de calidad de la empresa.`
-          },
-          {
-            id: 'm_pareto_interactive',
-            title: '🔘 Táctica: El Diagrama de Pareto (80/20)',
+            id: 'm_pareto_metodos',
+            title: '🕹️ SIMULADOR: Pareto en Puertas',
             type: 'interactive',
             interactiveData: [
-              { 
-                title: '¿Por qué SELECCIONAR con Pareto?', 
-                body: 'Permite que administradores e ingenieros enfoquen su atención en los defectos críticos. Es mucho más sencillo reducir o eliminar defectos que ocurren con frecuencia que aquellos que se presentan en raras ocasiones. Atacar un problema legítimo garantiza el retorno de inversión del estudio de métodos.' 
-              },
-              { 
-                title: 'Paso 1: Recolección y Ordenamiento', 
-                body: 'Identificamos las categorías de fallas o problemas. En el caso de las puertas, detectamos: "Fuera de perfil", "Piezas desordenadas", "Agujeros perdidos", etc. Se deben ordenar de mayor a menor frecuencia (Cantidad).' 
-              },
-              { 
-                title: 'Paso 2: Porcentajes e Impacto Relativo', 
-                body: 'Calculamos qué porcentaje del total representa cada defecto. Por ejemplo, si tenemos 81 defectos totales y "Fuera de perfil" ocurre 30 veces, representa el 37% del problema global.' 
-              },
-              { 
-                title: 'Paso 3: El Porcentaje Acumulado', 
-                body: 'Sumamos los porcentajes sucesivamente. Esto nos genera la curva de Lorenz. Cuando el acumulado llega cerca del 80%, hemos identificado los problemas críticos que debemos SELECCIONAR para el análisis de métodos.' 
-              },
-              { 
-                title: 'Paso 4: Análisis de la Zona Vital', 
-                body: 'En el gráfico resultante, los defectos a la izquierda de la curva (Zona A) son los responsables de la mayor parte de las pérdidas. No pierdas tiempo con "Otros" defectos que sumados apenas llegan al 5%, enfócate en los que detienen la producción.' 
-              }
-            ]
-          },
-          {
-            id: 'm_pareto_simulation',
-            title: '🕹️ SIMULADOR: Análisis de Puertas Estructurales',
-            type: 'interactive',
-            interactiveData: [
-              { 
-                title: '📊 DIAGNÓSTICO: Datos Recabados', 
-                body: 'Durante una jornada laboral, control de calidad detectó:\n1. Fuera de Perfil: 30 casos (37%)\n2. Piezas Desordenadas: 21 casos (25.9%)\n3. Agujeros/Ranuras Perdidos: 6 casos (7.4%)\nTotal acumulado de los dos primeros: 62.9%.' 
-              },
-              { 
-                title: '🔍 SELECCIONAR: La Decisión del Ingeniero', 
-                body: 'Al observar que "Fuera de Perfil" y "Piezas Desordenadas" representan casi el 63% del total de fallas, el equipo de Métodos debe SELECCIONAR estos dos procesos para un estudio de tiempos y movimientos profundo. Ignorar los defectos de "Partes no lubricadas" (6.2%) por ahora es una decisión estratégica correcta.' 
-              },
-              { 
-                title: '📈 RESULTADO: Gráfica de Líneas', 
-                body: 'La gráfica muestra una pendiente pronunciada al inicio. Esto confirma que el problema está concentrado. Al intervenir el método de perfilado y el ordenamiento de piezas, la eficiencia de la planta de puertas aumentará drásticamente con un esfuerzo localizado.' 
-              }
-            ]
-          },
-          {
-            id: 'm_met_quiz',
-            title: '🧠 Evaluación: Selección y Pareto',
-            type: 'quiz',
-            questions: [
-              {
-                id: 'q_met_1',
-                question: '¿Cuál es el primer paso oficial de la Ingeniería de Métodos?',
-                options: ['Definir el salario', 'SELECCIONAR el trabajo a estudiar', 'Comprar cronómetros'],
-                correctAnswer: 1
-              },
-              {
-                id: 'q_met_2',
-                question: 'El Diagrama de Pareto se basa en el principio de:',
-                options: ['Los pocos vitales y los muchos triviales', 'Todos los problemas valen lo mismo', 'El más rápido gana'],
-                correctAnswer: 0
-              },
-              {
-                id: 'q_met_3',
-                question: 'En el caso de las puertas, ¿cuál fue el defecto con mayor frecuencia?',
-                options: ['Piezas desordenadas', 'Agujeros perdidos', 'Fuera de perfil'],
-                correctAnswer: 2
-              },
-              {
-                id: 'q_met_4',
-                question: '¿Para qué sirve el porcentaje acumulado en un Pareto?',
-                options: ['Para saber cuánto dinero ganamos', 'Para identificar cuándo llegamos al 80% del impacto total', 'Para decorar la gráfica'],
-                correctAnswer: 1
-              }
+              { title: 'Análisis de Defectos', body: 'Fuera de Perfil (37%), Piezas Desordenadas (26%).' },
+              { title: 'Estrategia 80/20', body: 'Atacando solo 2 fallos resolvemos el 63% de la mala calidad.' }
             ]
           }
         ]

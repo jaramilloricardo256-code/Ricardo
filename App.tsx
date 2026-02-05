@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { UserRole, Course, User } from './types';
+import { UserRole, Course, User, Unit } from './types';
 import { INITIAL_COURSES } from './constants';
 import Layout from './components/Layout';
 import CourseViewer from './views/CourseViewer';
@@ -14,6 +14,7 @@ const App: React.FC = () => {
     return saved ? JSON.parse(saved) : INITIAL_COURSES;
   });
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [initialModuleId, setInitialModuleId] = useState<string | undefined>(undefined);
   const [showToast, setShowToast] = useState(false);
   const [googleScriptUrl, setGoogleScriptUrl] = useState(() => localStorage.getItem('educapro_custom_url') || '');
   const [searchTerm, setSearchTerm] = useState('');
@@ -56,13 +57,25 @@ const App: React.FC = () => {
     }
   };
 
+  const openUnit = (course: Course, unit: Unit) => {
+    setSelectedCourse(course);
+    setInitialModuleId(unit.modules[0]?.id);
+  };
+
   const filteredCourses = courses.filter(c => 
     c.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
     c.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const renderContent = () => {
-    if (selectedCourse) return <CourseViewer course={selectedCourse} onBack={() => setSelectedCourse(null)} user={user} />;
+    if (selectedCourse) return (
+      <CourseViewer 
+        course={selectedCourse} 
+        onBack={() => {setSelectedCourse(null); setInitialModuleId(undefined);}} 
+        user={user} 
+        initialModuleId={initialModuleId}
+      />
+    );
     
     if (role === 'teacher' && activeTab === 'instructor') {
       return (
@@ -113,16 +126,34 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {filteredCourses.map((course) => (
               <div key={course.id} className="bg-white border border-slate-100 rounded-[50px] overflow-hidden hover:shadow-2xl transition-all p-8 group flex flex-col border-b-8 hover:border-b-blue-600">
-                <div className="relative overflow-hidden rounded-[35px] mb-8 shadow-sm">
-                  <img src={course.image} className="h-56 w-full object-cover group-hover:scale-110 transition duration-700" />
-                  <div className="absolute top-5 left-5">
+                <div className="relative overflow-hidden rounded-[35px] mb-6 shadow-sm">
+                  <img src={course.image} className="h-48 w-full object-cover group-hover:scale-110 transition duration-700" />
+                  <div className="absolute top-4 left-4">
                     <span className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black uppercase text-blue-600 shadow-md">{course.category}</span>
                   </div>
                 </div>
-                <h3 className="font-black text-slate-900 text-2xl mb-3 tracking-tight">{course.title}</h3>
-                <p className="text-slate-400 text-sm mb-8 line-clamp-2 flex-grow font-medium leading-relaxed">{course.description}</p>
-                <button onClick={() => setSelectedCourse(course)} className="w-full bg-slate-50 text-slate-900 py-5 rounded-[25px] font-black hover:bg-slate-900 hover:text-white transition shadow-sm flex items-center justify-center gap-3">
-                  <i className="fas fa-door-open"></i> Abrir Asignatura
+                
+                <h3 className="font-black text-slate-900 text-2xl mb-2 tracking-tight">{course.title}</h3>
+                <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 italic">Autor: Ricardo Hinestroza</p>
+                
+                <div className="flex-grow space-y-3 mb-8">
+                  <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] border-b pb-2">Temas Disponibles</p>
+                  <div className="space-y-2">
+                    {course.units.map((unit) => (
+                      <button 
+                        key={unit.id}
+                        onClick={() => openUnit(course, unit)}
+                        className="w-full flex items-center justify-between p-4 bg-slate-50 rounded-2xl text-[11px] font-bold text-slate-600 hover:bg-blue-600 hover:text-white transition group/unit"
+                      >
+                        <span className="truncate flex-1 text-left">{unit.title}</span>
+                        <i className="fas fa-chevron-right text-[8px] opacity-30 group-hover/unit:opacity-100"></i>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <button onClick={() => setSelectedCourse(course)} className="w-full bg-slate-900 text-white py-5 rounded-[25px] font-black hover:bg-blue-600 transition shadow-sm flex items-center justify-center gap-3 text-xs uppercase tracking-widest">
+                  <i className="fas fa-door-open"></i> Abrir Asignatura Completa
                 </button>
               </div>
             ))}
@@ -146,7 +177,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Layout role={role} setRole={setRole} activeTab={activeTab} setActiveTab={(t) => { setActiveTab(t); setSelectedCourse(null); }}>
+    <Layout role={role} setRole={setRole} activeTab={activeTab} setActiveTab={(t) => { setActiveTab(t); setSelectedCourse(null); setInitialModuleId(undefined); }}>
       {renderContent()}
     </Layout>
   );

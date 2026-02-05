@@ -59,6 +59,7 @@ export interface AnalyticsEvent {
   userName: string;
   courseId: string;
   courseTitle: string;
+  unitTitle: string; // Nuevo campo para reportes granulares
   moduleId: string;
   moduleTitle: string;
   action: 'view' | 'complete' | 'quiz_score' | 'feedback' | 'registration' | 'case_analysis' | 'interactive_click';

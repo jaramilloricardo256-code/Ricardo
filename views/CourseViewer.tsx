@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Course, Module, AnalyticsEvent, StudentProfile } from '../types';
+import { Course, Module, AnalyticsEvent, StudentProfile, Unit } from '../types';
 import AITutor from '../components/AITutor';
 import { saveToGoogleSheets } from '../services/googleSheetService';
 
@@ -8,10 +8,17 @@ interface CourseViewerProps {
   course: Course;
   onBack: () => void;
   user: { id: string, name: string };
+  initialModuleId?: string;
 }
 
-const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => {
-  const [activeModule, setActiveModule] = useState<Module>(course.units[0].modules[0]);
+const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user, initialModuleId }) => {
+  const [activeModule, setActiveModule] = useState<Module>(() => {
+    if (initialModuleId) {
+      const found = course.units.flatMap(u => u.modules).find(m => m.id === initialModuleId);
+      if (found) return found;
+    }
+    return course.units[0].modules[0];
+  });
   const [completedModules, setCompletedModules] = useState<Set<string>>(new Set());
   const [showSurvey, setShowSurvey] = useState<'initial' | 'final' | null>(null);
   const [quizSelection, setQuizSelection] = useState<Record<string, number>>({});
@@ -23,6 +30,11 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
     career: '', 
     expectations: '' 
   });
+
+  const getActiveUnitTitle = (moduleId: string): string => {
+    const unit = course.units.find(u => u.modules.some(m => m.id === moduleId));
+    return unit ? unit.title : "General";
+  };
 
   useEffect(() => {
     const savedProfile = localStorage.getItem(`profile_${user.id}`);
@@ -41,6 +53,13 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
     logEvent('view', activeModule.id, activeModule.title);
   }, [activeModule.id]);
 
+  useEffect(() => {
+    if (initialModuleId) {
+      const found = course.units.flatMap(u => u.modules).find(m => m.id === initialModuleId);
+      if (found) setActiveModule(found);
+    }
+  }, [initialModuleId]);
+
   const logEvent = async (action: AnalyticsEvent['action'], moduleId: string, moduleTitle: string, value?: any) => {
     const savedProfileStr = localStorage.getItem(`profile_${user.id}`);
     const savedProfile = savedProfileStr ? JSON.parse(savedProfileStr) : null;
@@ -54,6 +73,7 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
       userName: studentName,
       courseId: course.id,
       courseTitle: course.title,
+      unitTitle: getActiveUnitTitle(moduleId),
       moduleId,
       moduleTitle,
       action,
@@ -166,6 +186,7 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
           </button>
           <div className="mb-10">
              <h2 className="google-font text-2xl font-black text-gray-900 leading-tight mb-4">{course.title}</h2>
+             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest italic mb-4">Autor: Ricardo Hinestroza</p>
              <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
                 <div 
                   className="bg-blue-600 h-full transition-all duration-1000" 
@@ -208,15 +229,15 @@ const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, user }) => 
           </div>
 
           <div className="flex-1 mb-14">
-            {activeModule.type === 'text' && <p className="text-gray-600 text-2xl font-medium leading-relaxed">{activeModule.content}</p>}
+            {activeModule.type === 'text' && <p className="text-gray-600 text-2xl font-medium leading-relaxed whitespace-pre-line">{activeModule.content}</p>}
             
             {activeModule.type === 'interactive' && (
               <div className="space-y-12">
                 <div className="p-8 bg-slate-900 text-white rounded-[40px] shadow-2xl relative overflow-hidden group">
                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 blur-3xl group-hover:bg-blue-600/40 transition duration-700"></div>
                    <p className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] mb-4">Misión Operativa</p>
-                   <h2 className="text-3xl font-black italic tracking-tighter mb-4 leading-none">Intervención de Red</h2>
-                   <p className="text-slate-400 font-medium text-lg leading-relaxed">Selecciona los nodos de la cadena para desplegar el diagnóstico y la táctica correctiva recomendada.</p>
+                   <h2 className="text-3xl font-black italic tracking-tighter mb-4 leading-none">Análisis Táctico</h2>
+                   <p className="text-slate-400 font-medium text-lg leading-relaxed">Selecciona un elemento para desplegar el diagnóstico cuantitativo y la resolución técnica.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
